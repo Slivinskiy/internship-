@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}">
+    <title>Sign Up</title>
+    <script type="text/javascript">
+        function validate() {
+            var firstName = document.getElementById("firstName");
+            var lastName = document.getElementById("lastName");
+            var username = document.getElementById("username");
+            var password = document.getElementById("password");
+
+            if (firstName.value.trim() == "") {
+                alert("Blank First Name")
+                firstName.style.border = "solid 3px red";
+                document.getElementById("lblFirstName").style.visibility = "visible";
+                return false;
+            } else if (lastName.value.trim() == "") {
+                alert("Blank Last Name")
+                lastName.style.border = "solid 3px red";
+                document.getElementById("lblLastName").style.visibility = "visible";
+                return false;
+            } else if (username.value.trim() == "") {
+                alert("Blank Last Username")
+                username.style.border = "solid 3px red";
+                document.getElementById("lblUsername").style.visibility = "visible";
+                return false;
+            } else if (password.value.trim() == "") {
+                alert("Blank Password")
+                password.style.border = "solid 3px red";
+                document.getElementById("lblPassword").style.visibility = "visible";
+                return false;
+            } else if (password.value.trim().length < 7) {
+                alert("Password too short. \nPassword should contain at least 7 characters.")
+                password.style.border = "solid 3px red";
+                document.getElementById("lblPassword").style.visibility = "visible";
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div style="text-align: center">
+    <h1>Sign Up</h1>
+    <form onsubmit="return validate();" th:object="${user}" th:action="@{/signup}" action="#" method="POST">
+        <div id="success-msg" th:if="${signupSuccess}" class="alert alert-dark">
+<!--            You successfully signed up! Please continue to the <a id="login-link" th:href="@{/login}">login</a> page.-->
+        </div>
+        <div id="error-msg" th:if="${signupError}" class="alert alert-danger">
+            <span th:text="${signupError}">Example Signup Error Message</span>
+        </div>
+        First Name: <input th:field="*{firstName}" type="text" name="firstName" id="firstName"> <label id="lblFirstName"
+                                                                               style="color: red; visibility: hidden;">Invalid</label> <br>
+        <br>
+        Last Name:  <input th:field="*{lastName}"  type="text" name="lastName" id="lastName"> <label id="lblLastName"
+                                                                             style="color: red; visibility: hidden;">Invalid</label> <br>
+        <br>
+        Username:   <input th:field="*{username}" type="text" name="username" id="username"> <label id="lblUsername"
+                                                                             style="color: #ff0000; visibility: hidden;">Invalid</label> <br>
+        <br>
+        Password:   <input th:field="*{password}" type="password" name="password" id="password"> <label id="lblPassword"
+                                                                                 style="color: red; visibility: hidden;">Invalid</label> <br>
+        <br>
+        <button type="submit" name="signup" class="btn btn-success">SignUp</button>
+    </form>
+    <br>
+    <label> <a id="login-link" th:href="@{/login}">Back to login</a> </label>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
